@@ -28,10 +28,10 @@ try:
 except OSError:
     logging.info("file cannot be read")
 
-
+# fichier vide, fichier non lu try/except
 data = dict()
 data["group"]= []
-
+n=int
 try:
     json_groups = open("student_name.json", 'w')
     logging.info("Storing groups in JSON file")
@@ -45,24 +45,26 @@ def final_groups(name_list, n):
 
     logging.info("shuffling the list : start")
     random.shuffle(name_list)
-    logging.info("shuffling the list : end")
-
     print(name_list)
-    logging.info('forming groups : start')
-    if n == int and n!=0:
+    logging.info("shuffling the list : end")
+    if n >0:
+        logging.info('forming groups : start')
         for j in range(len(name_list)//n):
             selected= name_list[j:j+n]
             name_list = name_list[1:]
-            data["group"].append(selected)
-            
             logging.info("slicing the list -> not using the names")
+
+            data["group"].append(selected)
+        print(data)
+        json.dump(data, json_groups, indent=4)
     else:
-        logging.info("error, caanot forms groups of n != int")
+        logging.info("cannot operate, wrong value of diviser")
 
-    json.dump(data, json_groups, indent=4)
-
-    logging.info('forming groups : end')
-    
+            
+            #jsonify
+            # ! n doit etre positif et different de 0 (int)
+        logging.info('forming groups : end')
+        
 
 final_groups(list_name, 2)
 
